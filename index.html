@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Chase: The Ultimate Treasure Hunt Lucky Draw! 🪙</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .wheel-container {
+            position: relative;
+            width: 650px; /* Increased size */
+            height: 650px;
+            margin: 20px auto;
+        }
+
+        .wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 5px solid #333;
+            position: absolute;
+            transition: transform 4s ease-out;
+        }
+
+        .pointer {
+            position: absolute;
+            top: 53%;
+            left: 51.2%;
+            width: 50px;
+            height: 50px;
+            background: rgb(105, 225, 19);
+            clip-path: polygon(50% 0%, 100% 100%, 0 100%);
+            transform: translate(-50%, -100%);
+            z-index: 10;
+        }
+
+        .spin-btn {
+            position: absolute;
+            bottom: -100px; /* Adjusted to be in the middle lower portion */
+            left: 50%;
+            transform: translateX(-50%);
+            background: red;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.3s ease;
+        }
+
+        .spin-btn:hover {
+            background: darkred;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Wheel Colors */
+        .wheel {
+            background: conic-gradient(
+                red 0deg 36deg, yellow 36deg 72deg, rgb(41, 196, 238) 72deg 108deg, rgb(87, 37, 37) 108deg 144deg,
+                white 144deg 180deg, green 180deg 216deg, rgb(244, 51, 173) 216deg 252deg, purple 252deg 288deg,
+                rgb(245, 123, 10) 288deg 324deg, black 324deg 360deg
+            );
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Google Chase: The Ultimate Treasure Hunt Lucky Draw! 🪙</h1>
+    <div class="wheel-container">
+        <div class="pointer"></div>
+        <div id="wheel" class="wheel"></div>
+        <button class="spin-btn" onclick="spinWheel()">SPIN 🎡</button>
+    </div>
+
+    <div id="result"></div>
+
+    <audio id="spinSound" src="https://www.fesliyanstudios.com/play-mp3/4386"></audio>
+
+    <script>
+        const segments = 10; // Number of segments
+        const segmentAngle = 360 / segments;
+        let currentRotation = 0;
+
+        function spinWheel() {
+            let randomSegment = Math.floor(Math.random() * segments); // Choose a random segment
+            let extraRotation = Math.floor(Math.random() * 1800) + 1800; // Ensures full spins
+            let targetAngle = segmentAngle * randomSegment;
+            let finalRotation = extraRotation + targetAngle - (currentRotation % 360);
+
+            let wheel = document.getElementById("wheel");
+            wheel.style.transform = `rotate(${currentRotation + finalRotation}deg)`;
+            currentRotation += finalRotation;
+
+            let spinSound = document.getElementById("spinSound");
+            spinSound.play();
+
+            setTimeout(() => {
+                spinSound.pause();
+                spinSound.currentTime = 0;
+
+                document.getElementById("result").innerHTML = "🎉 Congratulations team!!! You won an immunity pin!!⚡ 🎉";
+            }, 4000);
+        }
+    </script>
+
+</body>
+</html>
