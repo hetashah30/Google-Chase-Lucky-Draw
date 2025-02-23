@@ -9,18 +9,25 @@
             text-align: center;
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            zoom: 1.05;
         }
 
         h1 {
-            font-size: 24px;
+            font-size: 22px;
             color: #333;
+            margin-bottom: 10px;
         }
 
         .wheel-container {
             position: relative;
-            width: 650px; /* Increased size */
-            height: 650px;
-            margin: 20px auto;
+            width: 450px;
+            height: 450px;
         }
 
         .wheel {
@@ -30,25 +37,27 @@
             border: 5px solid #333;
             position: absolute;
             transition: transform 4s ease-out;
+            background: conic-gradient(
+                red 0deg 36deg, yellow 36deg 72deg, rgb(41, 196, 238) 72deg 108deg, rgb(87, 37, 37) 108deg 144deg,
+                white 144deg 180deg, green 180deg 216deg, rgb(244, 51, 173) 216deg 252deg, purple 252deg 288deg,
+                rgb(245, 123, 10) 288deg 324deg, black 324deg 360deg
+            );
         }
 
         .pointer {
             position: absolute;
-            top: 53%;
-            left: 51.2%;
-            width: 50px;
-            height: 50px;
+            top: 50%;
+            left: 51%;
+            width: 40px;
+            height: 40px;
             background: rgb(105, 225, 19);
             clip-path: polygon(50% 0%, 100% 100%, 0 100%);
-            transform: translate(-50%, -100%);
+            transform: translate(-50%, -50%);
             z-index: 10;
         }
 
         .spin-btn {
-            position: absolute;
-            bottom: -100px; /* Adjusted to be in the middle lower portion */
-            left: 50%;
-            transform: translateX(-50%);
+            margin-top: 20px;
             background: red;
             color: white;
             border: none;
@@ -64,43 +73,32 @@
         }
 
         #result {
-            margin-top: 20px;
-            font-size: 22px;
+            margin-top: 15px;
+            font-size: 20px;
             font-weight: bold;
             color: #333;
-        }
-
-        /* Wheel Colors */
-        .wheel {
-            background: conic-gradient(
-                red 0deg 36deg, yellow 36deg 72deg, rgb(41, 196, 238) 72deg 108deg, rgb(87, 37, 37) 108deg 144deg,
-                white 144deg 180deg, green 180deg 216deg, rgb(244, 51, 173) 216deg 252deg, purple 252deg 288deg,
-                rgb(245, 123, 10) 288deg 324deg, black 324deg 360deg
-            );
         }
     </style>
 </head>
 <body>
-
     <h1>Google Chase: The Ultimate Treasure Hunt Lucky Draw! 🪙</h1>
     <div class="wheel-container">
         <div class="pointer"></div>
         <div id="wheel" class="wheel"></div>
-        <button class="spin-btn" onclick="spinWheel()">SPIN 🎡</button>
     </div>
-
+    <button class="spin-btn" onclick="spinWheel()">SPIN 🎡</button>
     <div id="result"></div>
 
     <audio id="spinSound" src="https://www.fesliyanstudios.com/play-mp3/4386"></audio>
 
     <script>
-        const segments = 10; // Number of segments
+        const segments = 10;
         const segmentAngle = 360 / segments;
         let currentRotation = 0;
 
         function spinWheel() {
-            let randomSegment = Math.floor(Math.random() * segments); // Choose a random segment
-            let extraRotation = Math.floor(Math.random() * 1800) + 1800; // Ensures full spins
+            let randomSegment = Math.floor(Math.random() * segments);
+            let extraRotation = Math.floor(Math.random() * 1800) + 1800;
             let targetAngle = segmentAngle * randomSegment;
             let finalRotation = extraRotation + targetAngle - (currentRotation % 360);
 
@@ -114,11 +112,9 @@
             setTimeout(() => {
                 spinSound.pause();
                 spinSound.currentTime = 0;
-
                 document.getElementById("result").innerHTML = "🎉 Congratulations team!!! You won an immunity pin!!⚡ 🎉";
             }, 4000);
         }
     </script>
-
 </body>
 </html>
